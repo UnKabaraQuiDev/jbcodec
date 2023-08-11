@@ -228,4 +228,4 @@ false
 ------
 
 ## Compiling
-Use the /build/build.sh script to compile with the optional arguments -version:X and -main:X to specify a JAR Main-Class.
+Use the [`/build/build.sh`](https://github.com/Poucy113/jbcodec/blob/main/build/build.sh) script to compile with the optional arguments -version:X and -main:X to specify a JAR Main-Class.
