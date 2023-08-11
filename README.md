@@ -45,6 +45,7 @@ Not all blocks need to contain data, a few data types do not contain any data, s
 |------|--------|------------------|
 | `java.lang.Null` (null) | 0 | 2 |
 | `java.lang.Void` (void) | 0 | 2 |
+
 Note that encoding `Null` or `Void` types without their header is useless because they won't be decoded.<br>
 
 Some types have variable sizes:
