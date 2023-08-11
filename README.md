@@ -89,7 +89,7 @@ The `CodecManager` class is responsible for managing the encoding and decoding o
 5. `Encoder getEncoder(String className)`: Gets the encoder registered with the specified class name (including package, `Class<>.getName()`).
 6. `Encoder getEncoder(Object object)`: Gets the encoder associated with the current object type.
 7. `ByteBuffer encode(Object obj)`: Encodes the object as a ByteBuffer; throws EncoderNotFoundException if a needed Encoder wasn't registered.
-8. `ByteBuffer encode(boolea, addHeader, Object obj)`: Encodes the object as a ByteBuffer; throws EncoderNotFoundException if a needed Encoder wasn't registered.
+8. `ByteBuffer encode(boolean addHeader, Object obj)`: Encodes the object as a ByteBuffer; throws EncoderNotFoundException if a needed Encoder wasn't registered.
 9. `Object decode(ByteBuffer bb)`: Decodes the ByteBuffer into an Object, the header needs to be present while encoding this ByteBuffer.
 
 
