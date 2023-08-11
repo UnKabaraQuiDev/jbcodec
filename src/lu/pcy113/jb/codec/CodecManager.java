@@ -77,10 +77,31 @@ public class CodecManager {
     		throw new EncoderNotFoundException("Encoder for: "+o.getClass()+"; not registered in CodecManager.");
     	return e.encode(true, o);
     }
+    public ByteBuffer encode(boolean b, Object o) {
+    	Encoder e = getEncoder(o);
+    	if(e == null)
+    		throw new EncoderNotFoundException("Encoder for: "+o.getClass()+"; not registered in CodecManager.");
+    	return e.encode(b, o);
+    }
     public Object decode(ByteBuffer bb) {
     	return getDecoder(bb.getShort()).decode(false, bb);
     }
     
+    /**
+     * Registers the following D/Encoders:
+     * 0. Null
+     * 1. Byte
+     * 2. Short
+     * 3. Integer
+     * 4. Double
+     * 5. Float
+     * 6. Long
+     * 7. Character
+     * 8. String
+     * 9. Void
+     * 10. Boolean
+     * @return
+     */
     public static final CodecManager base() {
     	CodecManager cm = new CodecManager();
     	

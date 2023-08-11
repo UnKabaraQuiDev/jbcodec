@@ -90,3 +90,5 @@ build/*
 !build/build.sh
 
 test/
+
+Main.java
