@@ -60,6 +60,6 @@ javac -nowarn -d "${bin_dir}" "@${out_dir}/sources.txt" 2>&1 | grep -v "^Note:"
 echo "Compilation done to ${bin_dir}/"
 
 # Add to JAR file
-jar cvfm "${out_dir}/packets4j-${version}.jar" "${manifest}" -C "${bin_dir}" . > "/dev/null" 2>&1
+jar cvfm "${out_dir}/jbcodec-${version}.jar" "${manifest}" -C "${bin_dir}" . > "/dev/null" 2>&1
 
-echo "JAR file compressed to: ${out_dir}/packets4j-${version}.jar"
+echo "JAR file compressed to: ${out_dir}/jbcodec-${version}.jar"
