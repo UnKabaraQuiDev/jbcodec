@@ -118,7 +118,7 @@ true
 ```
 
 Creating a custom D/Encoder for the class Car:
-```
+```java
 public class Car {
   int amountOfWheels;
   long capacity;
@@ -197,7 +197,7 @@ public class CarEncoder implements Encoder<Car> {
 }
 ```
 
-```
+```java
 cm.register(
     new CarEncoder(),
     new CarDecoder(),
