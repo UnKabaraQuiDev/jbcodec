@@ -91,4 +91,4 @@ build/*
 
 test/
 
-Main.java
+PrivateMain.java

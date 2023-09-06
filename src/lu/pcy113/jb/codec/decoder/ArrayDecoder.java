@@ -30,12 +30,10 @@ public class ArrayDecoder implements Decoder<Object[]> {
         }
 
         int length = bb.getInt();
-        short elementHeader = bb.getShort();
 
-        Decoder<?> elementDecoder = cm.getDecoder(elementHeader);
         Object[] array = new Object[length];
         for(int i = 0; i < length; i++) {
-            array[i] = elementDecoder.decode(false, bb);
+            array[i] = cm.decode(bb);
         }
         return array;
     }

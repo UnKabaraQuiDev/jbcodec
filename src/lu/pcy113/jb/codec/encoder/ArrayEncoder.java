@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import lu.pcy113.jb.codec.CodecManager;
-import lu.pcy113.jb.codec.utils.ArrayUtils;
+import lu.pcy113.jb.utils.ArrayUtils;
 
 public class ArrayEncoder implements Encoder<Object[]> {
 
@@ -29,24 +29,19 @@ public class ArrayEncoder implements Encoder<Object[]> {
     /**
      * ( HEAD     2b
      * - SIZE     4b
-     * - SUB HEAD 2b
-     * - DATA     xb
+     * - DATA     >=2b
+     *     Data HEAD 2b
+     *     DATA VALUE xb
      */
     public ByteBuffer encode(boolean head, Object[] obj) {
-    	String name = obj.getClass().getName();
-        Encoder elementEncoder = cm.getEncoder(name.substring(2, name.length()-1));
-        if(elementEncoder == null)
-        	throw new EncoderNotFoundException("Encoder for object: "+obj.getClass().getName()+", not found in codec.");
-        
         List<Byte> elements = new ArrayList<>();
         for(Object o : obj) {
-            elements.addAll(ArrayUtils.byteArrayToList(elementEncoder.encode(false, o).array()));
+            elements.addAll(ArrayUtils.byteArrayToList(cm.encode(o).array()));
         }
-        ByteBuffer bb = ByteBuffer.allocate(elements.size() + 4 + (head ? 2 : 0) + 2);
+        ByteBuffer bb = ByteBuffer.allocate((head ? 2 : 0) + 4 + elements.size());
         if(head)
             bb.putShort(header);
         bb.putInt(obj.length);
-        bb.putShort(elementEncoder.header());
         bb.put(ArrayUtils.byteListToPrimitive(elements));
         
         bb.flip();

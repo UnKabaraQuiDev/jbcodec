@@ -2,34 +2,20 @@ package lu.pcy113.jb.codec.decoder;
 
 import java.nio.ByteBuffer;
 
-import lu.pcy113.jb.codec.CodecManager;
+public class ShortDecoder extends DefaultObjectDecoder<Short> {
+	
+	public ShortDecoder() {
+		super(Short.class);
+	}
 
-public class ShortDecoder implements Decoder<Short> {
-    
-    private CodecManager cm = null;
-    private short header;
+	public Short decode(boolean head, ByteBuffer bb) {
+		if(head) {
+			short nheader = bb.getShort();
+			if(nheader != header)
+				Decoder.decoderNotCompatible(nheader, header);
+		}
 
-    public CodecManager codecManager() {return cm;}
-    public short header() {return header;}
-    public Class<?> type() {return Short.class;}
-    
-    public String register(CodecManager cm, short header) {
-    	verifyRegister();
-    	
-        this.cm = cm;
-        this.header = header;
-        
-        return type().getName();
-    }
-
-    public Short decode(boolean head, ByteBuffer bb) {
-        if(head) {
-            short nheader = bb.getShort();
-            if(nheader != header)
-            	Decoder.decoderNotCompatible(nheader, header);
-        }
-
-        return bb.getShort();
-    }
+		return bb.getShort();
+	}
 
 }
