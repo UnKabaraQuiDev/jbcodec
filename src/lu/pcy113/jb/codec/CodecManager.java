@@ -3,6 +3,7 @@ package lu.pcy113.jb.codec;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import lu.pcy113.jb.codec.decoder.BooleanDecoder;
 import lu.pcy113.jb.codec.decoder.ByteDecoder;
@@ -49,6 +50,10 @@ public class CodecManager {
 
 	public Decoder getDecoder(short header) {
 		return registeredDecoders.get(header).getKey();
+	}
+	public Decoder getDecoderByClass(Class<?> clazz) {
+		Optional<Pair<Decoder, String>> d = registeredDecoders.values().stream().filter(e -> e.getValue().equals(clazz.getName())).findFirst();
+		return d.isPresent() ? d.get().getKey() : null;
 	}
 	public Encoder getEncoderByClassName(String name) {
 		return registeredEncoders.get(name).getKey();

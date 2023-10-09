@@ -9,11 +9,7 @@ public class CharacterDecoder extends DefaultObjectDecoder<Character> {
 	}
 
     public Character decode(boolean head, ByteBuffer bb) {
-        if(head) {
-            short nheader = bb.getShort();
-            if(nheader != header)
-            	Decoder.decoderNotCompatible(nheader, header);
-        }
+        verifyHeader(head, bb);
 
         return bb.getChar();
     }

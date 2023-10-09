@@ -10,11 +10,7 @@ public class HashMapDecoder extends DefaultObjectDecoder<HashMap<?, ?>> {
 	}
 
 	public HashMap<?, ?> decode(boolean head, ByteBuffer bb) {
-		if(head) {
-			short nheader = bb.getShort();
-			if(nheader != header)
-				Decoder.decoderNotCompatible(nheader, header);
-		}
+		verifyHeader(head, bb);
 
 		int length = bb.getInt();
 

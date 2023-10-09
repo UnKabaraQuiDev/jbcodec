@@ -9,11 +9,7 @@ public class BooleanDecoder extends DefaultObjectDecoder<Boolean> {
 	}
 	
 	public Boolean decode(boolean head, ByteBuffer bb) {
-		if(head) {
-			short nheader = bb.getShort();
-			if(nheader != header)
-				Decoder.decoderNotCompatible(nheader, header);
-		}
+		verifyHeader(head, bb);
 
 		return bb.get() == 0 ? false : true;
 	}

@@ -16,6 +16,7 @@ public abstract class DefaultObjectDecoder<T> implements Decoder<T> {
 	public CodecManager codecManager() {return cm;}
 	public short header() {return header;}
 	public Class<?> type() {return clazz;}
+	public String name() {return type().getName();}
 	
 	public String register(CodecManager cm, short header) {
 		verifyRegister();
@@ -23,7 +24,7 @@ public abstract class DefaultObjectDecoder<T> implements Decoder<T> {
 		this.cm = cm;
 		this.header = header;
 		
-		return type().getName();
+		return name();
 	}
 
 }

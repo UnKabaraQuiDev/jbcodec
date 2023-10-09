@@ -9,11 +9,7 @@ public class FloatDecoder extends DefaultObjectDecoder<Float> {
 	}
 
 	public Float decode(boolean head, ByteBuffer bb) {
-		if(head) {
-			short nheader = bb.getShort();
-			if(nheader != header)
-				Decoder.decoderNotCompatible(nheader, header);
-		}
+		verifyHeader(head, bb);
 
 		return bb.getFloat();
 	}

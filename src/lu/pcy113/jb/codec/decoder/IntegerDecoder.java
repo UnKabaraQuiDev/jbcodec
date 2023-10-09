@@ -9,11 +9,7 @@ public class IntegerDecoder extends DefaultObjectDecoder<Integer> {
 	}
 
 	public Integer decode(boolean head, ByteBuffer bb) {
-		if(head) {
-			short nheader = bb.getShort();
-			if(nheader != header)
-				Decoder.decoderNotCompatible(nheader, header);
-		}
+		verifyHeader(head, bb);
 
 		return bb.getInt();
 	}
