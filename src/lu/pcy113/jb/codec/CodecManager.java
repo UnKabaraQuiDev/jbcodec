@@ -9,6 +9,7 @@ import lu.pcy113.jb.codec.decoder.BooleanDecoder;
 import lu.pcy113.jb.codec.decoder.ByteDecoder;
 import lu.pcy113.jb.codec.decoder.CharacterDecoder;
 import lu.pcy113.jb.codec.decoder.Decoder;
+import lu.pcy113.jb.codec.decoder.DecoderNotFoundException;
 import lu.pcy113.jb.codec.decoder.DoubleDecoder;
 import lu.pcy113.jb.codec.decoder.FloatDecoder;
 import lu.pcy113.jb.codec.decoder.IntegerDecoder;
@@ -49,7 +50,8 @@ public class CodecManager {
 	}
 
 	public Decoder getDecoder(short header) {
-		return registeredDecoders.get(header).getKey();
+		Pair<Decoder, String> dec = registeredDecoders.get(header);
+		return (dec == null ? null : dec.getKey());
 	}
 	public Decoder getDecoderByClass(Class<?> clazz) {
 		Optional<Pair<Decoder, String>> d = registeredDecoders.values().stream().filter(e -> e.getValue().equals(clazz.getName())).findFirst();
@@ -99,7 +101,11 @@ public class CodecManager {
 		return e.encode(b, o);
 	}
 	public Object decode(ByteBuffer bb) {
-		return getDecoder(bb.getShort()).decode(false, bb);
+		short header = bb.getShort();
+		Decoder dec = getDecoder(header);
+		if(dec == null)
+			throw new DecoderNotFoundException(header);
+		return dec.decode(false, bb);
 	}
 	
 	/**
