@@ -54,21 +54,27 @@ public class CodecManager {
 		return (dec == null ? null : dec.getKey());
 	}
 	public Decoder getDecoderByClass(Class<?> clazz) {
-		Optional<Pair<Decoder, String>> d = registeredDecoders.values().stream().filter(e -> e.getValue().equals(clazz.getName())).findFirst();
+		Optional<Pair<Decoder, String>> d = registeredDecoders
+				.values()
+				.stream()
+				.filter(e -> e.getValue().equals(clazz.getName()))
+				.findFirst();
 		return d.isPresent() ? d.get().getKey() : null;
 	}
 	public Encoder getEncoderByClassName(String name) {
 		return registeredEncoders.get(name).getKey();
 	}
-	public Encoder getEncoderByObject(Object clazz) {
-		try {
-			String name = clazz.getClass().getName().replace("^class\\s", "");
-			if(registeredEncoders.containsKey(name))
-				return registeredEncoders.get(name).getKey();
-		}catch(Exception e) {}
+	public Encoder getEncoderByObject(Object obj) {
+		if(obj != null) {
+			try {
+				String name = obj.getClass().getName().replace("^class\\s", "");
+				if(registeredEncoders.containsKey(name))
+					return registeredEncoders.get(name).getKey();
+			}catch(Exception e) {}
+		}
 		
 		for(Entry<String, Pair<Encoder, Short>> e : registeredEncoders.entrySet())
-			if(e.getValue().getKey().confirmType(clazz))
+			if(e.getValue().getKey().confirmType(obj))
 				return e.getValue().getKey();
 		
 		return null;
@@ -82,7 +88,7 @@ public class CodecManager {
 		}catch(Exception e) {}
 		
 		for(Entry<String, Pair<Encoder, Short>> e : registeredEncoders.entrySet())
-			if(e.getValue().getKey().confirmType(clazz))
+			if(e.getValue().getKey().confirmClassType(clazz))
 				return e.getValue().getKey();
 		
 		return null;
@@ -91,13 +97,13 @@ public class CodecManager {
 	public ByteBuffer encode(Object o) {
 		Encoder e = getEncoderByObject(o);
 		if(e == null)
-			throw new EncoderNotFoundException("Encoder for: "+o.getClass()+"; not registered in CodecManager.");
+			throw new EncoderNotFoundException("Encoder for: "+(o != null ? o.getClass() : "NullType")+"; not registered in CodecManager.");
 		return e.encode(true, o);
 	}
 	public ByteBuffer encode(boolean b, Object o) {
 		Encoder e = getEncoderByObject(o);
 		if(e == null)
-			throw new EncoderNotFoundException("Encoder for: "+o.getClass()+"; not registered in CodecManager.");
+			throw new EncoderNotFoundException("Encoder for: "+(o != null ? o.getClass() : "NullType")+"; not registered in CodecManager.");
 		return e.encode(b, o);
 	}
 	public Object decode(ByteBuffer bb) {
@@ -109,19 +115,18 @@ public class CodecManager {
 	}
 	
 	/**
-	 * Registers the following D/Encoders:
-	 * 0. Null
-	 * 1. Byte
-	 * 2. Short
-	 * 3. Integer
-	 * 4. Double
-	 * 5. Float
-	 * 6. Long
-	 * 7. Character
-	 * 8. String
-	 * 9. Void
-	 * 10. Boolean
-	 * @return
+	 * Registers the following D/Encoders:<br>
+	 * 0. Null<br>
+	 * 1. Byte<br>
+	 * 2. Short<br>
+	 * 3. Integer<br>
+	 * 4. Double<br>
+	 * 5. Float<br>
+	 * 6. Long<br>
+	 * 7. Character<br>
+	 * 8. String<br>
+	 * 9. Void<br>
+	 * 10. Boolean<br>
 	 */
 	public static final CodecManager base() {
 		CodecManager cm = new CodecManager();

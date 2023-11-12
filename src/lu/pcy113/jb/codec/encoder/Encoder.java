@@ -23,6 +23,9 @@ public interface Encoder<T> {
         return (head ? 2 : -1);
     }
     default boolean confirmType(Object obj) {
-    	return obj.getClass().equals(type());
+    	return obj != null && obj.getClass().equals(type());
     }
+	default boolean confirmClassType(Class<?> clazz) {
+		return clazz != null && clazz.equals(type());
+	}
 }

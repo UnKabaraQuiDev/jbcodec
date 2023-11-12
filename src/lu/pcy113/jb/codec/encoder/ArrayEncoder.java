@@ -15,7 +15,7 @@ public class ArrayEncoder implements Encoder<Object[]> {
     public CodecManager codecManager() {return cm;}
     public short header() {return header;}
     public Class<?> type() {return null;}
-    public boolean confirmType(Object o) {return o.getClass().isArray();}
+    public boolean confirmType(Object o) {return o != null && o.getClass().isArray();}
     
     public String register(CodecManager cm, short header) {
     	verifyRegister();

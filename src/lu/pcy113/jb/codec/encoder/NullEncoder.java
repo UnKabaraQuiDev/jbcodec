@@ -7,6 +7,11 @@ public class NullEncoder extends DefaultObjectEncoder<Object> {
 	public NullEncoder() {
 		super(Object.class);
 	}
+	
+	@Override
+	public boolean confirmType(Object obj) {
+		return obj == null;
+	}
 
 	public ByteBuffer encode(boolean head, Object obj) {
 		ByteBuffer bb = ByteBuffer.allocate((head ? 2 : 0));
