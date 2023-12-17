@@ -16,7 +16,7 @@ public class HashMapDecoder extends DefaultObjectDecoder<HashMap<?, ?>> {
 
 		HashMap<Object, Object> map = new HashMap<>();
 
-		for(int i = 0; i < length; i++) {
+		for (int i = 0; i < length; i++) {
 			Object k = cm.decode(bb);
 			Object v = cm.decode(bb);
 			map.put(k, v);

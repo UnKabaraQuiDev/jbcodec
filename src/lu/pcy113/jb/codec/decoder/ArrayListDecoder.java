@@ -8,13 +8,14 @@ public class ArrayListDecoder extends DefaultObjectDecoder<ArrayList<?>> {
 	public ArrayListDecoder() {
 		super(ArrayList.class);
 	}
+
 	public ArrayList<Object> decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 
 		int length = bb.getInt();
 
 		ArrayList<Object> array = new ArrayList<>();
-		for(int i = 0; i < length; i++) {
+		for (int i = 0; i < length; i++) {
 			array.add(cm.decode(bb));
 		}
 		return array;

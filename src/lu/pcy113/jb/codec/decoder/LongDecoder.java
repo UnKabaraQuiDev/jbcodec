@@ -3,7 +3,7 @@ package lu.pcy113.jb.codec.decoder;
 import java.nio.ByteBuffer;
 
 public class LongDecoder extends DefaultObjectDecoder<Long> {
-	
+
 	public LongDecoder() {
 		super(Long.class);
 	}
@@ -13,5 +13,5 @@ public class LongDecoder extends DefaultObjectDecoder<Long> {
 
 		return bb.getLong();
 	}
-	
+
 }

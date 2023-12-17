@@ -3,15 +3,15 @@ package lu.pcy113.jb.codec.decoder;
 import java.nio.ByteBuffer;
 
 public class CharacterDecoder extends DefaultObjectDecoder<Character> {
-	
+
 	public CharacterDecoder() {
 		super(Character.class);
 	}
 
-    public Character decode(boolean head, ByteBuffer bb) {
-        verifyHeader(head, bb);
+	public Character decode(boolean head, ByteBuffer bb) {
+		verifyHeader(head, bb);
 
-        return bb.getChar();
-    }
+		return bb.getChar();
+	}
 
 }

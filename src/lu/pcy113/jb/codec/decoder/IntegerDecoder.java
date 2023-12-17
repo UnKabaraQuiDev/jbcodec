@@ -3,7 +3,7 @@ package lu.pcy113.jb.codec.decoder;
 import java.nio.ByteBuffer;
 
 public class IntegerDecoder extends DefaultObjectDecoder<Integer> {
-	
+
 	public IntegerDecoder() {
 		super(Integer.class);
 	}
