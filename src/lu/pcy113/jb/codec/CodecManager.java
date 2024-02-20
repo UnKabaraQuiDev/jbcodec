@@ -35,6 +35,8 @@ import lu.pcy113.jb.utils.Pair;
 
 public class CodecManager {
 
+	public static final int HEAD_SIZE = Short.BYTES;
+	
 	private HashMap<Short, Pair<Decoder, String>> registeredDecoders = new HashMap<>();
 	private HashMap<String, Pair<Encoder, Short>> registeredEncoders = new HashMap<>();
 
