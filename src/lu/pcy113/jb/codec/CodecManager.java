@@ -35,6 +35,8 @@ import lu.pcy113.jb.utils.Pair;
 
 public class CodecManager {
 
+	public static final int HEAD_SIZE = Short.BYTES;
+	
 	private HashMap<Short, Pair<Decoder, String>> registeredDecoders = new HashMap<>();
 	private HashMap<String, Pair<Encoder, Short>> registeredEncoders = new HashMap<>();
 
@@ -50,7 +52,18 @@ public class CodecManager {
 		register(d, header);
 		register(e, header);
 	}
-
+	
+	public <T> int estimateSize(boolean head, T obj) {
+		if(obj == null)
+			return -1;
+		
+		Encoder<T> encoder = ((Encoder<T>) getEncoderByClass(obj.getClass()));
+		if(encoder == null)
+			return -1;
+		
+		return encoder.estimateSize(head, obj);
+	}
+	
 	public Decoder getDecoder(short header) {
 		Pair<Decoder, String> dec = registeredDecoders.get(header);
 		return (dec == null ? null : dec.getKey());

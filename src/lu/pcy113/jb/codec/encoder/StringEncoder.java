@@ -18,5 +18,10 @@ public class StringEncoder extends DefaultObjectEncoder<String> {
 		bb.flip();
 		return bb;
 	}
+	
+	@Override
+	public int estimateSize(boolean head, String obj) {
+		return obj.length()*Character.BYTES + Integer.BYTES + (head ? 2 : 0);
+	}
 
 }
