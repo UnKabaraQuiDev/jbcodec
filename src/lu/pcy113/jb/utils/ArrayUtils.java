@@ -38,4 +38,26 @@ public final class ArrayUtils {
 		return sb.toString();
 	}
 
+	public static int byteToInt(byte[] byteArray) {
+		if(byteArray.length != 4) {
+			throw new NumberFormatException("Array length should be 4.");
+		}
+		
+		int result = 0;
+		for (int i = 0; i < byteArray.length; i++) {
+			result = (result << 8) | (byteArray[i] & 0xFF);
+		}
+		
+		return result;
+	}
+
+	public static byte[] byteBufferToArray(ByteBuffer bb) {
+		int length = bb.remaining();
+		byte[] cc = new byte[length];
+		
+		bb.get(cc);
+		
+		return cc;
+	}
+
 }
