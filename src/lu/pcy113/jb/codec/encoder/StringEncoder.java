@@ -2,6 +2,8 @@ package lu.pcy113.jb.codec.encoder;
 
 import java.nio.ByteBuffer;
 
+import lu.pcy113.jb.codec.CodecManager;
+
 public class StringEncoder extends DefaultObjectEncoder<String> {
 
 	public StringEncoder() {
@@ -9,11 +11,13 @@ public class StringEncoder extends DefaultObjectEncoder<String> {
 	}
 
 	public ByteBuffer encode(boolean head, String obj) {
-		ByteBuffer bb = ByteBuffer.allocate(obj.length() + 4 + (head ? 2 : 0));
+		ByteBuffer bb = ByteBuffer.allocate(estimateSize(head, obj));
 		if (head)
 			bb.putShort(header);
 		bb.putInt(obj.length());
-		bb.put(obj.getBytes());
+		
+		for(char c : obj.toCharArray())
+			bb.putChar(c);
 
 		bb.flip();
 		return bb;
@@ -21,7 +25,7 @@ public class StringEncoder extends DefaultObjectEncoder<String> {
 	
 	@Override
 	public int estimateSize(boolean head, String obj) {
-		return obj.length()*Character.BYTES + Integer.BYTES + (head ? 2 : 0);
+		return obj.length()*Character.BYTES + Integer.BYTES + (head ? CodecManager.HEAD_SIZE : 0);
 	}
 
 }

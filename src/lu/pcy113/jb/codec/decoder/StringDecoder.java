@@ -11,10 +11,14 @@ public class StringDecoder extends DefaultObjectDecoder<String> {
 	public String decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 
+		StringBuilder sb = new StringBuilder();
+		
 		int length = bb.getInt();
-		byte[] b = new byte[length];
-		bb.get(b);
-		return new String(b);
+		//byte[] b = new byte[length*Character.BYTES];
+		for(int i = 0; i < length; i++)
+			sb.append(bb.getChar());
+		
+		return sb.toString();
 	}
 
 }
