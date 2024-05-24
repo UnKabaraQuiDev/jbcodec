@@ -92,3 +92,4 @@ build/*
 test/
 
 PrivateMain.java
+/target/

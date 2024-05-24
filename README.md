@@ -105,7 +105,7 @@ long in = 256;
 // Encode the input value to a ByteBuffer
 ByteBuffer bb = cm.encode(in);
 // Print out the content of the ByteBuffer
-System.out.println(ArrayUtils.byteBufferToHexString(bb));
+System.out.println(PCUtils.byteBufferToHexString(bb));
 // Output value: Long 256
 long out = (long) cm.decode(bb);
 System.out.println(in == out);
@@ -212,7 +212,7 @@ car.name = "Custom Car XXL";
 System.out.println(car.toString());
 
 ByteBuffer b2 = cm.encode(car);
-System.out.println(ArrayUtils.byteBufferToHexString(b2));
+System.out.println(PCUtils.byteBufferToHexString(b2));
 Car carOut = (Car) cm.decode(b2);
 System.out.println(carOut.toString());
 System.out.println(car == carOut);
