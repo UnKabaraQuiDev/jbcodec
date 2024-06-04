@@ -2,6 +2,8 @@ package lu.pcy113.jbcodec.encoder;
 
 import java.nio.ByteBuffer;
 
+import lu.pcy113.jbcodec.CodecManager;
+
 public class CharacterEncoder extends DefaultObjectEncoder<Character> {
 
 	public CharacterEncoder() {
@@ -16,6 +18,11 @@ public class CharacterEncoder extends DefaultObjectEncoder<Character> {
 
 		bb.flip();
 		return bb;
+	}
+
+	@Override
+	public int estimateSize(boolean head, Character obj) {
+		return (head ? CodecManager.HEAD_SIZE : 0) + Character.BYTES;
 	}
 
 }

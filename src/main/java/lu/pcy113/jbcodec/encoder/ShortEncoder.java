@@ -2,6 +2,8 @@ package lu.pcy113.jbcodec.encoder;
 
 import java.nio.ByteBuffer;
 
+import lu.pcy113.jbcodec.CodecManager;
+
 public class ShortEncoder extends DefaultObjectEncoder<Short> {
 
 	public ShortEncoder() {
@@ -16,6 +18,11 @@ public class ShortEncoder extends DefaultObjectEncoder<Short> {
 
 		bb.flip();
 		return bb;
+	}
+
+	@Override
+	public int estimateSize(boolean head, Short obj) {
+		return (head ? CodecManager.HEAD_SIZE : 0) + Short.BYTES;
 	}
 
 }

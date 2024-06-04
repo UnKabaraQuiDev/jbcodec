@@ -36,7 +36,7 @@ import lu.pcy113.pclib.Pair;
 public class CodecManager {
 
 	public static final int HEAD_SIZE = Short.BYTES;
-	
+
 	private HashMap<Short, Pair<Decoder, String>> registeredDecoders = new HashMap<>();
 	private HashMap<String, Pair<Encoder, Short>> registeredEncoders = new HashMap<>();
 
@@ -52,26 +52,26 @@ public class CodecManager {
 		register(d, header);
 		register(e, header);
 	}
-	
+
 	public <T> int estimateSize(boolean head, T obj) {
-		if(obj == null)
+		if (obj == null)
 			return -1;
-		
+
 		Encoder<T> encoder = ((Encoder<T>) getEncoderByClass(obj.getClass()));
-		if(encoder == null)
-			return -1;
-		
+		if (encoder == null) {
+			throw new EncoderNotFoundException("Encoder not found for type: " + obj.getClass().getName());
+		}
+
 		return encoder.estimateSize(head, obj);
 	}
-	
+
 	public Decoder getDecoder(short header) {
 		Pair<Decoder, String> dec = registeredDecoders.get(header);
 		return (dec == null ? null : dec.getKey());
 	}
 
 	public <T> Decoder<T> getDecoderByClass(Class<T> clazz) {
-		Optional<Pair<Decoder, String>> d = registeredDecoders.values().stream()
-				.filter(e -> e.getValue().equals(clazz.getName())).findFirst();
+		Optional<Pair<Decoder, String>> d = registeredDecoders.values().stream().filter(e -> e.getValue().equals(clazz.getName())).findFirst();
 		return d.isPresent() ? d.get().getKey() : null;
 	}
 
@@ -83,15 +83,19 @@ public class CodecManager {
 		if (obj != null) {
 			try {
 				String name = obj.getClass().getName().replace("^class\\s", "");
-				if (registeredEncoders.containsKey(name))
+				if (registeredEncoders.containsKey(name)) {
 					return registeredEncoders.get(name).getKey();
+				}
 			} catch (Exception e) {
+				e.printStackTrace();
 			}
 		}
 
-		for (Entry<String, Pair<Encoder, Short>> e : registeredEncoders.entrySet())
-			if (e.getValue().getKey().confirmType(obj))
+		for (Entry<String, Pair<Encoder, Short>> e : registeredEncoders.entrySet()) {
+			if (e.getValue().getKey().confirmType(obj)) {
 				return e.getValue().getKey();
+			}
+		}
 
 		return null;
 	}
@@ -100,31 +104,35 @@ public class CodecManager {
 		try {
 			// String name = clazz.getName().replace("^class\\s", "");
 			String name = clazz.getName();
-			if (registeredEncoders.containsKey(name))
+			if (registeredEncoders.containsKey(name)) {
 				return registeredEncoders.get(name).getKey();
+			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
-		for (Entry<String, Pair<Encoder, Short>> e : registeredEncoders.entrySet())
-			if (e.getValue().getKey().confirmClassType(clazz))
+		for (Entry<String, Pair<Encoder, Short>> e : registeredEncoders.entrySet()) {
+			if (e.getValue().getKey().confirmClassType(clazz)) {
 				return e.getValue().getKey();
+			}
+		}
 
 		return null;
 	}
 
 	public ByteBuffer encode(Object o) {
 		Encoder e = getEncoderByObject(o);
-		if (e == null)
-			throw new EncoderNotFoundException(
-					"Encoder for: " + (o != null ? o.getClass() : "NullType") + "; not registered in CodecManager.");
+		if (e == null) {
+			throw new EncoderNotFoundException("Encoder for: " + (o != null ? o.getClass() : "NullType") + "; not registered in CodecManager.");
+		}
 		return e.encode(true, o);
 	}
 
 	public ByteBuffer encode(boolean b, Object o) {
 		Encoder e = getEncoderByObject(o);
-		if (e == null)
-			throw new EncoderNotFoundException(
-					"Encoder for: " + (o != null ? o.getClass() : "NullType") + "; not registered in CodecManager.");
+		if (e == null) {
+			throw new EncoderNotFoundException("Encoder for: " + (o != null ? o.getClass() : "NullType") + "; not registered in CodecManager.");
+		}
 		return e.encode(b, o);
 	}
 

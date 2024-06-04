@@ -2,6 +2,8 @@ package lu.pcy113.jbcodec.encoder;
 
 import java.nio.ByteBuffer;
 
+import lu.pcy113.jbcodec.CodecManager;
+
 public class NullEncoder extends DefaultObjectEncoder<Object> {
 
 	public NullEncoder() {
@@ -20,6 +22,11 @@ public class NullEncoder extends DefaultObjectEncoder<Object> {
 
 		bb.flip();
 		return bb;
+	}
+
+	@Override
+	public int estimateSize(boolean head, Object obj) {
+		return (head ? CodecManager.HEAD_SIZE : 0);
 	}
 
 }
