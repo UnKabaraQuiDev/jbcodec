@@ -15,16 +15,25 @@
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<local.jar.path>${project.basedir}/target/${project.artifactId}-${project.version}.jar</local.jar.path>
+		<local.jar.path>
+			${project.basedir}/target/${project.artifactId}-${project.version}.jar</local.jar.path>
 		<local.pom.path>${project.basedir}/pom.xml</local.pom.path>
 	</properties>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>lu.pcy113</groupId>
 			<artifactId>PCLib</artifactId>
 			<version>0.4</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.7.0</version>
+			<scope>test</scope>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -38,7 +47,7 @@
 					<target>${maven.compiler.target}</target>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -70,12 +79,24 @@
 									<arg value="install:install-file" />
 									<arg value="-Dfile=${local.jar.path}" />
 									<arg value="-DpomFile=${local.pom.path}" />
-									<arg value="-Dclassifier=local"/>
+									<arg value="-Dclassifier=local" />
 								</exec>
 							</target>
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>3.0.0</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-report-plugin</artifactId>
+				<version>2.19.1</version>
 			</plugin>
 		</plugins>
 	</build>
