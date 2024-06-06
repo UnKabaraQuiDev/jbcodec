@@ -13,15 +13,15 @@ public class ClassEncoder extends DefaultObjectEncoder<Class<?>> {
 	@Override
 	public ByteBuffer encode(boolean head, Class<?> obj) {
 		ByteBuffer bb = ByteBuffer.allocate(estimateSize(head, obj));
-		
+
 		if (head) {
 			bb.putShort(header());
 		}
-		
+
 		bb.put(cm.encode(false, (String) obj.getName()));
-		
+
 		bb.flip();
-		
+
 		return bb;
 	}
 

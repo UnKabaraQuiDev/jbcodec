@@ -20,9 +20,9 @@ public class ObjectSerializableEncoder extends DefaultObjectEncoder<ObjectSerial
 		}
 
 		bb.put(cm.encode(false, obj.getClass()));
-		
+
 		bb.flip();
-		
+
 		return bb;
 	}
 
@@ -30,12 +30,12 @@ public class ObjectSerializableEncoder extends DefaultObjectEncoder<ObjectSerial
 	public int estimateSize(boolean head, ObjectSerializable obj) {
 		return (head ? CodecManager.HEAD_SIZE : 0) + cm.estimateSize(false, obj.getClass());
 	}
-	
+
 	@Override
 	public boolean confirmClassType(Class<?> clazz) {
 		return ObjectSerializableEncoder.class.isAssignableFrom(clazz);
 	}
-	
+
 	@Override
 	public boolean confirmType(Object obj) {
 		return obj instanceof ObjectSerializable;

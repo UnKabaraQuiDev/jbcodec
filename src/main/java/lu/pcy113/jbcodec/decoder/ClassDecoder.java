@@ -11,7 +11,7 @@ public class ClassDecoder extends DefaultObjectDecoder<Class<?>> {
 	@Override
 	public Class<?> decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
-		
+
 		try {
 			return Class.forName(cm.getDecoderByClass(String.class).decode(false, bb));
 		} catch (ClassNotFoundException e) {
