@@ -15,6 +15,8 @@ public class ObjectSerializableDecoder extends DefaultObjectDecoder<ObjectSerial
 
 	@Override
 	public ObjectSerializable decode(boolean head, ByteBuffer bb) {
+		verifyHeader(head, bb);
+		
 		Class<?> clazz = cm.getDecoderByClass(Class.class).decode(false, bb);
 
 		try {
