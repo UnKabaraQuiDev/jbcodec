@@ -31,7 +31,7 @@ import lu.pcy113.jbcodec.encoder.NullEncoder;
 import lu.pcy113.jbcodec.encoder.ShortEncoder;
 import lu.pcy113.jbcodec.encoder.StringEncoder;
 import lu.pcy113.jbcodec.encoder.VoidEncoder;
-import lu.pcy113.pclib.Pair;
+import lu.pcy113.pclib.datastructure.pair.Pair;
 
 public class CodecManager {
 
