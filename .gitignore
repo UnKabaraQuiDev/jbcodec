@@ -89,7 +89,5 @@ local.properties
 build/*
 !build/build.sh
 
-test/
-
 PrivateMain.java
 /target/

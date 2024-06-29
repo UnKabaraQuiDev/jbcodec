@@ -3,11 +3,9 @@ package lu.pcy113.jbcodec.encoder;
 import lu.pcy113.jbcodec.CodecManager;
 
 /**
- * Simplification of an Encoder<T>; this wont work with generic types (Arrays,
- * etc)
+ * Simplification of an Encoder<T>; this wont work with generic types (Arrays, etc)
  *
- * @param <T> the type this encoder will encode; has to be the same as passed
- *            into the constructor
+ * @param <T> the type this encoder will encode; has to be the same as passed into the constructor
  */
 public abstract class DefaultObjectEncoder<T> implements Encoder<T> {
 

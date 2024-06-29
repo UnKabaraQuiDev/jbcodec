@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 import lu.pcy113.jbcodec.CodecManager;
 
 public interface Encoder<T> {
-	
+
 	CodecManager codecManager();
 
 	short header();
@@ -22,7 +22,7 @@ public interface Encoder<T> {
 	ByteBuffer encode(boolean head, T obj);
 
 	default int estimateSize(boolean head, T obj) {
-		return (head ? CodecManager.HEAD_SIZE : -1);
+		throw new UnsupportedOperationException("This method wasn't implements by: " + this.getClass().getName());
 	}
 
 	default boolean confirmType(Object obj) {
