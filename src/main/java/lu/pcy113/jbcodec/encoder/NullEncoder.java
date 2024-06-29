@@ -6,15 +6,12 @@ import lu.pcy113.jbcodec.CodecManager;
 
 public class NullEncoder extends DefaultObjectEncoder<Object> {
 
-	public NullEncoder() {
-		super(Object.class);
-	}
-
 	@Override
 	public boolean confirmType(Object obj) {
 		return obj == null;
 	}
 
+	@Override
 	public ByteBuffer encode(boolean head, Object obj) {
 		ByteBuffer bb = ByteBuffer.allocate((head ? 2 : 0));
 		if (head)

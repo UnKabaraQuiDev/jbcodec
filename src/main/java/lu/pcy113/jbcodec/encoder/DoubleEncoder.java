@@ -6,10 +6,7 @@ import lu.pcy113.jbcodec.CodecManager;
 
 public class DoubleEncoder extends DefaultObjectEncoder<Double> {
 
-	public DoubleEncoder() {
-		super(Double.class);
-	}
-
+	@Override
 	public ByteBuffer encode(boolean head, Double obj) {
 		ByteBuffer bb = ByteBuffer.allocate(8 + (head ? 2 : 0));
 		if (head)

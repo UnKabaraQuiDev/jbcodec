@@ -6,10 +6,7 @@ import lu.pcy113.jbcodec.CodecManager;
 
 public class CharacterEncoder extends DefaultObjectEncoder<Character> {
 
-	public CharacterEncoder() {
-		super(Character.class);
-	}
-
+	@Override
 	public ByteBuffer encode(boolean head, Character obj) {
 		ByteBuffer bb = ByteBuffer.allocate(1 + (head ? 2 : 0));
 		if (head)

@@ -7,10 +7,6 @@ import lu.pcy113.jbcodec.others.ObjectSerializable;
 
 public class ObjectSerializableEncoder extends DefaultObjectEncoder<ObjectSerializable> {
 
-	public ObjectSerializableEncoder() {
-		super(ObjectSerializable.class);
-	}
-
 	@Override
 	public ByteBuffer encode(boolean head, ObjectSerializable obj) {
 		ByteBuffer bb = ByteBuffer.allocate(estimateSize(head, obj));

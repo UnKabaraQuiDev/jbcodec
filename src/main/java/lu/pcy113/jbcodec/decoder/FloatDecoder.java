@@ -4,10 +4,7 @@ import java.nio.ByteBuffer;
 
 public class FloatDecoder extends DefaultObjectDecoder<Float> {
 
-	public FloatDecoder() {
-		super(Float.class);
-	}
-
+	@Override
 	public Float decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 

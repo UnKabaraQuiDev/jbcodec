@@ -1,5 +1,7 @@
 package lu.pcy113.jbcodec.encoder;
 
+import java.lang.reflect.ParameterizedType;
+
 import lu.pcy113.jbcodec.CodecManager;
 
 /**
@@ -16,6 +18,10 @@ public abstract class DefaultObjectEncoder<T> implements Encoder<T> {
 
 	public DefaultObjectEncoder(Class<?> clazz) {
 		this.clazz = clazz;
+	}
+
+	public DefaultObjectEncoder() {
+		clazz = (Class<?>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
 	}
 
 	public CodecManager codecManager() {

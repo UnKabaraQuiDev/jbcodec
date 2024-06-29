@@ -5,10 +5,7 @@ import java.util.HashMap;
 
 public class HashMapDecoder extends DefaultObjectDecoder<HashMap<?, ?>> {
 
-	public HashMapDecoder() {
-		super(HashMap.class);
-	}
-
+	@Override
 	public HashMap<?, ?> decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 

@@ -10,14 +10,10 @@ import lu.pcy113.pclib.PCUtils;
 
 public class HashMapEncoder extends DefaultObjectEncoder<HashMap<?, ?>> {
 
-	public HashMapEncoder() {
-		super(HashMap.class);
-	}
-
 	/**
-	 * ( HEAD 2b - SIZE 4b - DATA >=4b KEY HEAD 2b KEY DATA xb VALUE HEAD 2b VALUE
-	 * DATA xb
+	 * ( HEAD 2b - SIZE 4b - DATA >=4b KEY HEAD 2b KEY DATA xb VALUE HEAD 2b VALUE DATA xb
 	 */
+	@Override
 	public ByteBuffer encode(boolean head, HashMap<?, ?> obj) {
 		List<Byte> elements = new ArrayList<>();
 		for (Entry<?, ?> o : obj.entrySet()) {

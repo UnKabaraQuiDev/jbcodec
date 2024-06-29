@@ -4,10 +4,7 @@ import java.nio.ByteBuffer;
 
 public class CharacterDecoder extends DefaultObjectDecoder<Character> {
 
-	public CharacterDecoder() {
-		super(Character.class);
-	}
-
+	@Override
 	public Character decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 

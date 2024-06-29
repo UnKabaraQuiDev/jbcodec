@@ -6,10 +6,7 @@ import lu.pcy113.jbcodec.CodecManager;
 
 public class ByteEncoder extends DefaultObjectEncoder<Byte> {
 
-	public ByteEncoder() {
-		super(Byte.class);
-	}
-
+	@Override
 	public ByteBuffer encode(boolean head, Byte obj) {
 		ByteBuffer bb = ByteBuffer.allocate(1 + (head ? 2 : 0));
 		if (head)

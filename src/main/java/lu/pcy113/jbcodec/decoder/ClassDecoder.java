@@ -4,10 +4,6 @@ import java.nio.ByteBuffer;
 
 public class ClassDecoder extends DefaultObjectDecoder<Class<?>> {
 
-	public ClassDecoder() {
-		super(Class.class);
-	}
-
 	@Override
 	public Class<?> decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);

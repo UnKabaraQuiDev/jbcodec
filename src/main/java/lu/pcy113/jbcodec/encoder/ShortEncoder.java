@@ -6,10 +6,7 @@ import lu.pcy113.jbcodec.CodecManager;
 
 public class ShortEncoder extends DefaultObjectEncoder<Short> {
 
-	public ShortEncoder() {
-		super(Short.class);
-	}
-
+	@Override
 	public ByteBuffer encode(boolean head, Short obj) {
 		ByteBuffer bb = ByteBuffer.allocate(2 + (head ? 2 : 0));
 		if (head)

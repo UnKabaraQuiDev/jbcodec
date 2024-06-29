@@ -4,10 +4,7 @@ import java.nio.ByteBuffer;
 
 public class DoubleDecoder extends DefaultObjectDecoder<Double> {
 
-	public DoubleDecoder() {
-		super(Double.class);
-	}
-
+	@Override
 	public Double decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 

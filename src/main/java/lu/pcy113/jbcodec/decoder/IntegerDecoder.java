@@ -4,10 +4,7 @@ import java.nio.ByteBuffer;
 
 public class IntegerDecoder extends DefaultObjectDecoder<Integer> {
 
-	public IntegerDecoder() {
-		super(Integer.class);
-	}
-
+	@Override
 	public Integer decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 

@@ -6,10 +6,7 @@ import lu.pcy113.jbcodec.CodecManager;
 
 public class LongEncoder extends DefaultObjectEncoder<Long> {
 
-	public LongEncoder() {
-		super(Long.class);
-	}
-
+	@Override
 	public ByteBuffer encode(boolean head, Long obj) {
 		ByteBuffer bb = ByteBuffer.allocate(8 + (head ? 2 : 0));
 		if (head)

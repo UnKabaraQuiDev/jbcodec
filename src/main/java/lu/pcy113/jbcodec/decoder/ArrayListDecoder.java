@@ -5,10 +5,7 @@ import java.util.ArrayList;
 
 public class ArrayListDecoder extends DefaultObjectDecoder<ArrayList<?>> {
 
-	public ArrayListDecoder() {
-		super(ArrayList.class);
-	}
-
+	@Override
 	public ArrayList<Object> decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 

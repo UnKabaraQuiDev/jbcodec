@@ -4,10 +4,7 @@ import java.nio.ByteBuffer;
 
 public class VoidDecoder extends DefaultObjectDecoder<Void> {
 
-	public VoidDecoder() {
-		super(Void.class);
-	}
-
+	@Override
 	public Void decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 

@@ -8,13 +8,10 @@ import lu.pcy113.pclib.PCUtils;
 
 public class ArrayListEncoder extends DefaultObjectEncoder<ArrayList<?>> {
 
-	public ArrayListEncoder() {
-		super(ArrayList.class);
-	}
-
 	/**
 	 * ( HEAD 2b - SIZE 4b - SUB HEAD 2b - DATA xb
 	 */
+	@Override
 	public ByteBuffer encode(boolean head, ArrayList<?> obj) {
 		List<Byte> elements = new ArrayList<>();
 		for (Object o : obj) {

@@ -4,10 +4,7 @@ import java.nio.ByteBuffer;
 
 public class StringDecoder extends DefaultObjectDecoder<String> {
 
-	public StringDecoder() {
-		super(String.class);
-	}
-
+	@Override
 	public String decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 

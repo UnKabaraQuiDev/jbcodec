@@ -6,10 +6,7 @@ import lu.pcy113.jbcodec.CodecManager;
 
 public class VoidEncoder extends DefaultObjectEncoder<Void> {
 
-	public VoidEncoder() {
-		super(Void.class);
-	}
-
+	@Override
 	public ByteBuffer encode(boolean head, Void obj) {
 		ByteBuffer bb = ByteBuffer.allocate((head ? 2 : 0));
 		if (head)

@@ -4,10 +4,7 @@ import java.nio.ByteBuffer;
 
 public class LongDecoder extends DefaultObjectDecoder<Long> {
 
-	public LongDecoder() {
-		super(Long.class);
-	}
-
+	@Override
 	public Long decode(boolean head, ByteBuffer bb) {
 		verifyHeader(head, bb);
 
