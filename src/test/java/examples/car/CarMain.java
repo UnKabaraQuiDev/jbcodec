@@ -39,7 +39,7 @@ public class CarMain {
 		System.out.println(PCUtils.byteBufferToHexString(b2));
 		Car carOut = (Car) cm.decode(b2);
 		System.out.println(carOut.toString());
-		System.out.println("(long) car == carOut: "+car.equals(carOut));;
+		System.out.println("(Car) car == carOut: "+car.equals(carOut));;
 		assert car.equals(carOut);
 	}
 

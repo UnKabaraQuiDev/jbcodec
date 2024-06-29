@@ -95,7 +95,7 @@ The `CodecManager` class is responsible for managing the encoding and decoding o
 
 ------
 
-## Examples
+## Examples ([CarMain.java](https://github.com/UnKabaraQuiDev/jbcodec/blob/main/src/test/java/examples/car/CarMain.java))
 ```java
 // Load the base CodecManager
 CodecManager cm = CodecManager.base();
@@ -114,7 +114,7 @@ System.out output:
 ```
 00 06      00 00 00 00 00 00 01 00
 ^ HEADER | ^ DATA 
-true
+(long) in == out: true
 ```
 
 Creating a custom D/Encoder for the class Car:
@@ -129,71 +129,59 @@ public class Car {
     return amountOfWheels+", "+capacity+", "+full+", "+name;
   }
 }
-public class CarDecoder implements Decoder<Car> {
-  public CodecManager cm = null;
-  public short header;
 
-  public CodecManager codecManager() {return cm;}
-  public short header() {return header;}
-  public Class<?> type() {return Car.class;}
-  
-  public String register(CodecManager cm, short header) {
-    verifyRegister();
-    
-      this.cm = cm;
-      this.header = header;
-      
-      return type().getName();
+public class CarDecoder extends DefaultObjectDecoder<Car> {
+
+  public CarDecoder() {
+    super(Car.class);
   }
-    
+
+  @Override
   public Car decode(boolean head, ByteBuffer bb) {
-    if(head) {
-            short nheader = bb.getShort();
-            if(nheader != header)
-                Decoder.decoderNotCompatible(nheader, header);
-        }
-    
+    super.verifyHeader(head, bb);
+
     Car car = new Car();
     car.amountOfWheels = bb.getInt();
     car.capacity = bb.getLong();
     car.full = (boolean) cm.decode(bb);
     car.name = (String) cm.decode(bb);
-    
+
     return car;
   }
+
 }
 
-public class CarEncoder implements Encoder<Car> {
-  private CodecManager cm = null;
-  private short header;
+public class CarEncoder extends DefaultObjectEncoder<Car> {
 
-  public CodecManager codecManager() {return cm;}
-  public short header() {return header;}
-  public Class<?> type() {return Car.class;}
-  
-  public String register(CodecManager cm, short header) {
-    verifyRegister();
-    
-      this.cm = cm;
-      this.header = header;
-      
-      return type().getName();
+  public CarEncoder() {
+    super(Car.class);
+  }
+
+  @Override
+  public ByteBuffer encode(boolean head, Car obj) {
+    ByteBuffer bb = ByteBuffer.allocate(estimateSize(head, obj));
+    if (head)
+      bb.putShort(header);
+
+    bb.putInt(obj.amountOfWheels);
+    bb.putLong(obj.capacity);
+    bb.put(cm.encode(true, obj.full));
+    bb.put(cm.encode(true, obj.name));
+
+    bb.flip();
+    return bb;
   }
   
   @Override
-  public ByteBuffer encode(boolean head, Car obj) {
-    ByteBuffer bb = ByteBuffer.allocate(4 + 8 + 2+1 + 2+4+obj.name.length() + (head ? 2 : 0));
-      if(head)
-          bb.putShort(header);
-      
-      bb.putInt(obj.amountOfWheels);
-      bb.putLong(obj.capacity);
-      bb.put(cm.encode(true, obj.full));
-      bb.put(cm.encode(true, obj.name));
-      
-      bb.flip();
-      return bb;
+  public int estimateSize(boolean head, Car obj) {
+    // header: 2B
+    // amountOfWheels: 4B
+    // capacity: 8B
+    // full: estimateSize(Boolean)
+    // name: estimateSize(String)
+    return (head ? CodecManager.HEAD_SIZE : 0)+ 4 + 8 + 2 + cm.estimateSize(true, obj.full) + cm.estimateSize(true, obj.name);
   }
+  
 }
 ```
 
@@ -215,7 +203,7 @@ ByteBuffer b2 = cm.encode(car);
 System.out.println(PCUtils.byteBufferToHexString(b2));
 Car carOut = (Car) cm.decode(b2);
 System.out.println(carOut.toString());
-System.out.println(car == carOut);
+System.out.println(car.equals(carOut));
 ```
 System.out output:
 ```
@@ -223,10 +211,5 @@ System.out output:
 00 91          00 00 00 06 00 00 00 00 00 00 00 80 00 0A              01          00 08             00 00 00 0E       43 75 73 74 6F 6D 20 43 61 72 20 58 58 4C 
 ^ CAR HEADER | ^ INT     | ^ LONG                | ^ BOOLEAN HEADER | ^ BOOLEAN | ^ STRING HEADER | ^ STRING LENGTH | ^ STRING
 6, 128, true, Custom Car XXL
-false
+(Car) car == carOut: true
 ```
-
-------
-
-## Compiling
-Use the [`/build/build.sh`](https://github.com/Poucy113/jbcodec/blob/main/build/build.sh) script to compile with the optional arguments -version:X and -main:X to specify a JAR Main-Class.
