@@ -1,6 +1,7 @@
 package lu.pcy113.jbcodec.encoder;
 
 import java.lang.reflect.ParameterizedType;
+import java.nio.ByteBuffer;
 
 import lu.pcy113.jbcodec.CodecManager;
 
@@ -43,5 +44,15 @@ public abstract class DefaultObjectEncoder<T> implements Encoder<T> {
 		this.header = header;
 
 		return type().getName();
+	}
+	
+	protected void putHeader(boolean head, ByteBuffer bb) {
+		if(head) {
+			bb.putShort(header);
+		}
+	}
+
+	public int estimateHeaderSize(boolean head) {
+		return head ? CodecManager.HEAD_SIZE : 0;
 	}
 }
