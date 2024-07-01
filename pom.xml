@@ -71,7 +71,7 @@
 				<version>3.0.0</version>
 				<configuration>
 					<includes>
-						<include>CarMain.java</include>
+						<include>*Main.java</include>
 					</includes>
 				</configuration>
 			</plugin>
