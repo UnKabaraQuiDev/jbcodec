@@ -6,4 +6,8 @@ public class EncoderNotFoundException extends RuntimeException {
 		super(msg);
 	}
 
+	public EncoderNotFoundException(Exception e, String string) {
+		super(string, e);
+	}
+
 }

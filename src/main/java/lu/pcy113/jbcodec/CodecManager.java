@@ -54,13 +54,8 @@ public class CodecManager {
 	}
 
 	public <T> int estimateSize(boolean head, T obj) {
-		if (obj == null)
-			return -1;
-
-		Encoder<T> encoder = ((Encoder<T>) getEncoderByClass(obj.getClass()));
-		if (encoder == null) {
-			throw new EncoderNotFoundException("Encoder not found for type: " + obj.getClass().getName());
-		}
+		@SuppressWarnings("unchecked")
+		Encoder<T> encoder = ((Encoder<T>) getEncoderByObject(obj));
 
 		return encoder.estimateSize(head, obj);
 	}
@@ -87,7 +82,7 @@ public class CodecManager {
 					return registeredEncoders.get(name).getKey();
 				}
 			} catch (Exception e) {
-				e.printStackTrace();
+				throw new EncoderNotFoundException(e, "Error while getting encoder for object: "+obj);
 			}
 		}
 

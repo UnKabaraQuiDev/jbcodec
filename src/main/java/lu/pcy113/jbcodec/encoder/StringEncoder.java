@@ -2,15 +2,12 @@ package lu.pcy113.jbcodec.encoder;
 
 import java.nio.ByteBuffer;
 
-import lu.pcy113.jbcodec.CodecManager;
-
 public class StringEncoder extends DefaultObjectEncoder<String> {
 
 	@Override
 	public ByteBuffer encode(boolean head, String obj) {
 		ByteBuffer bb = ByteBuffer.allocate(estimateSize(head, obj));
-		if (head)
-			bb.putShort(header);
+		super.putHeader(head, bb);
 		
 		bb.putInt(obj.length());
 
@@ -23,7 +20,7 @@ public class StringEncoder extends DefaultObjectEncoder<String> {
 
 	@Override
 	public int estimateSize(boolean head, String obj) {
-		return obj.length() * Character.BYTES + Integer.BYTES + (head ? CodecManager.HEAD_SIZE : 0);
+		return obj.length() * Character.BYTES + Integer.BYTES + super.estimateHeaderSize(head);
 	}
 
 }
