@@ -3,7 +3,7 @@ package lu.pcy113.jbcodec.encoder;
 import java.nio.ByteBuffer;
 
 import lu.pcy113.jbcodec.CodecManager;
-import lu.pcy113.jbcodec.others.ObjectSerializable;
+import lu.pcy113.jbcodec.other.ObjectSerializable;
 
 public class ObjectSerializableEncoder extends DefaultObjectEncoder<ObjectSerializable> {
 

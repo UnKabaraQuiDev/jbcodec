@@ -4,8 +4,8 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.nio.ByteBuffer;
 
-import lu.pcy113.jbcodec.others.ObjectSerializable;
-import lu.pcy113.jbcodec.others.ObjectSerializableInit;
+import lu.pcy113.jbcodec.other.ObjectSerializable;
+import lu.pcy113.jbcodec.other.ObjectSerializableInit;
 
 public class ObjectSerializableDecoder extends DefaultObjectDecoder<ObjectSerializable> {
 

@@ -2,22 +2,9 @@ package lu.pcy113.jbcodec.decoder;
 
 import java.nio.ByteBuffer;
 
-import lu.pcy113.jbcodec.CodecManager;
+import lu.pcy113.jbcodec.dencoder.DEncoder;
 
-public interface Decoder<T> {
-
-	short header();
-
-	CodecManager codecManager();
-
-	Class<?> type();
-
-	String register(CodecManager cm, short header);
-
-	default void verifyRegister() {
-		if (codecManager() != null)
-			throw new IllegalArgumentException("Cannot register Decoder to more than one CodecManager.");
-	}
+public interface Decoder<T> extends DEncoder {
 
 	T decode(boolean head, ByteBuffer bb);
 

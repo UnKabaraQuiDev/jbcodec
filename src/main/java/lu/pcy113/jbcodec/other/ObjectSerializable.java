@@ -1,4 +1,4 @@
-package lu.pcy113.jbcodec.others;
+package lu.pcy113.jbcodec.other;
 
 public interface ObjectSerializable {
 
