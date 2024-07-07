@@ -71,6 +71,10 @@ public class CodecManager {
 	}
 
 	public Encoder getEncoderByClassName(String name) {
+		if (!registeredEncoders.containsKey(name)) {
+			throw new EncoderNotFoundException("Encoder for class: " + name + " not registered in CodecManager.");
+		}
+
 		return registeredEncoders.get(name).getKey();
 	}
 
@@ -82,7 +86,7 @@ public class CodecManager {
 					return registeredEncoders.get(name).getKey();
 				}
 			} catch (Exception e) {
-				throw new EncoderNotFoundException(e, "Error while getting encoder for object: "+obj);
+				throw new EncoderNotFoundException(e, "Error while getting encoder for object: " + obj);
 			}
 		}
 
@@ -92,18 +96,13 @@ public class CodecManager {
 			}
 		}
 
-		return null;
+		throw new EncoderNotFoundException("Encoder for: " + (obj != null ? obj.getClass() : "NullType") + "; not registered in CodecManager.");
 	}
 
 	public Encoder getEncoderByClass(Class<?> clazz) {
-		try {
-			// String name = clazz.getName().replace("^class\\s", "");
-			String name = clazz.getName();
-			if (registeredEncoders.containsKey(name)) {
-				return registeredEncoders.get(name).getKey();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		String name = clazz.getName();
+		if (registeredEncoders.containsKey(name)) {
+			return registeredEncoders.get(name).getKey();
 		}
 
 		for (Entry<String, Pair<Encoder, Short>> e : registeredEncoders.entrySet()) {
@@ -112,7 +111,7 @@ public class CodecManager {
 			}
 		}
 
-		return null;
+		throw new EncoderNotFoundException("Encoder for: " + (clazz != null ? clazz : "NullType") + "; not registered in CodecManager.");
 	}
 
 	public ByteBuffer encode(Object o) {
