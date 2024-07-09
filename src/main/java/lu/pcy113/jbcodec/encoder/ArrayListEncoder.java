@@ -40,4 +40,14 @@ public class ArrayListEncoder extends DefaultObjectEncoder<ArrayList<?>> {
 		return super.estimateHeaderSize(head) + 4 + IntStream.range(0, obj.size()).map(c -> cm.estimateSize(true, obj.get(c))).sum();
 	}
 
+	@Override
+	public boolean confirmClassType(Class<?> clazz) {
+		return ArrayList.class.isAssignableFrom(clazz);
+	}
+
+	@Override
+	public boolean confirmType(Object obj) {
+		return obj instanceof ArrayList;
+	}
+
 }
