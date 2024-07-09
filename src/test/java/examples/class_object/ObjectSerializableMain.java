@@ -1,4 +1,4 @@
-package example.class_object;
+package examples.class_object;
 
 import org.junit.jupiter.api.Test;
 

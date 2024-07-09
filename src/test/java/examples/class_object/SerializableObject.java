@@ -1,4 +1,4 @@
-package example.class_object;
+package examples.class_object;
 
 import lu.pcy113.jbcodec.other.ObjectSerializable;
 import lu.pcy113.jbcodec.other.ObjectSerializableInit;
