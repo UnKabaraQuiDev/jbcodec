@@ -3,7 +3,6 @@ package lu.pcy113.jbcodec.encoder;
 import java.nio.ByteBuffer;
 
 import lu.pcy113.pclib.datastructure.pair.Pair;
-import lu.pcy113.pclib.datastructure.pair.Pairs;
 import lu.pcy113.pclib.datastructure.pair.ReadOnlyPair;
 
 public class PairEncoder extends DefaultObjectEncoder<Pair<?, ?>> {

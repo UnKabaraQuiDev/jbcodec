@@ -4,8 +4,6 @@ import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import lu.pcy113.pclib.PCUtils;
-
 public class HashMapEncoder extends DefaultObjectEncoder<HashMap<?, ?>> {
 
 	public HashMapEncoder() {
