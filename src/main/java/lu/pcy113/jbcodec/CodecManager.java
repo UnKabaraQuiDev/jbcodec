@@ -52,6 +52,13 @@ public class CodecManager {
 		register(d, header);
 		register(e, header);
 	}
+	
+	public void registerBoth(Encoder e, short header) {
+		register(e, header);
+		if(e instanceof Decoder) {
+			register((Decoder) e, header);
+		}
+	}
 
 	public <T> int estimateSize(boolean head, T obj) {
 		@SuppressWarnings("unchecked")

@@ -40,7 +40,7 @@ public abstract class DefaultObjectDEncoder<T> implements Encoder<T>, Decoder<T>
 
 	public String register(CodecManager cm, short header) {
 		// verifyRegister(); don't verify register because its registered twice (encoder + decoder)
-		if(cm != null) {
+		if(this.cm != null) {
 			return name();
 		}
 		
