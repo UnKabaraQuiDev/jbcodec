@@ -3,7 +3,7 @@ package lu.pcy113.jbcodec;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map.Entry;
-import java.util.Optional;
+import java.util.Objects;
 
 import lu.pcy113.jbcodec.decoder.BooleanDecoder;
 import lu.pcy113.jbcodec.decoder.ByteDecoder;
@@ -40,23 +40,23 @@ public class CodecManager {
 	private HashMap<Short, Pair<Decoder, String>> registeredDecoders = new HashMap<>();
 	private HashMap<String, Pair<Encoder, Short>> registeredEncoders = new HashMap<>();
 
-	public void register(Decoder d, short header) {
+	public void register(Decoder<?> d, short header) {
 		registeredDecoders.put(header, new Pair<>(d, d.register(this, header)));
 	}
 
-	public void register(Encoder e, short header) {
+	public void register(Encoder<?> e, short header) {
 		registeredEncoders.put(e.register(this, header), new Pair<>(e, header));
 	}
 
-	public void register(Encoder e, Decoder d, short header) {
+	public void register(Encoder<?> e, Decoder<?> d, short header) {
 		register(d, header);
 		register(e, header);
 	}
 	
-	public void registerBoth(Encoder e, short header) {
+	public void registerBoth(Encoder<?> e, short header) {
 		register(e, header);
 		if(e instanceof Decoder) {
-			register((Decoder) e, header);
+			register((Decoder<?>) e, header);
 		}
 	}
 
@@ -73,8 +73,23 @@ public class CodecManager {
 	}
 
 	public <T> Decoder<T> getDecoderByClass(Class<T> clazz) {
-		Optional<Pair<Decoder, String>> d = registeredDecoders.values().stream().filter(e -> e.getValue().equals(clazz.getName())).findFirst();
-		return d.isPresent() ? d.get().getKey() : null;
+		return registeredDecoders
+				.values()
+				.stream()
+				.filter(e -> Objects.equals(e.getValue(), clazz.getName()))
+				.findFirst()
+				.map(e -> e == null ? null : e.getKey())
+				.get();
+	}
+	
+	public Encoder getEncoder(short header) {
+		return registeredEncoders
+				.values()
+				.stream()
+				.filter(e -> e.getValue() == header)
+				.findFirst()
+				.map(e -> e == null ? null : e.getKey())
+				.get();
 	}
 
 	public Encoder getEncoderByClassName(String name) {

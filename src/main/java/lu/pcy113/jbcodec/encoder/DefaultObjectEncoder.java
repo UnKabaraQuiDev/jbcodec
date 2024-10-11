@@ -6,9 +6,9 @@ import java.nio.ByteBuffer;
 import lu.pcy113.jbcodec.CodecManager;
 
 /**
- * Simplification of an Encoder<T>; this wont work with generic types (Arrays, etc)
+ * Simplification of an Encoder&lt;T&gt;; this wont work with primitive types (Arrays, etc)
  *
- * @param <T> the type this encoder will encode; has to be the same as passed into the constructor
+ * @param <T> the type this encoder will encode; has to be the same as passed into the constructor (optional)
  */
 public abstract class DefaultObjectEncoder<T> implements Encoder<T> {
 
