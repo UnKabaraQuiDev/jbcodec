@@ -42,7 +42,7 @@ public class SingleHashMapEncoder extends DefaultObjectEncoder<HashMap<Object, O
 
 	@Override
 	public int estimateSize(boolean head, HashMap<Object, Object> obj) {
-		int length = super.estimateHeaderSize(head) + Integer.BYTES + 2 * CodecManager.HEAD_SIZE;
+		int length = super.estimateHeaderSize(head) + Integer.BYTES + (obj.size() > 0 ? 2 * CodecManager.HEAD_SIZE : 0);
 		for (Entry<?, ?> o : obj.entrySet()) {
 			length += cm.estimateSize(false, o.getKey());
 			length += cm.estimateSize(false, o.getValue());

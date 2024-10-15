@@ -2,12 +2,12 @@ package lu.pcy113.jbcodec.encoder;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
 
-public class ArrayListEncoder extends DefaultObjectEncoder<ArrayList<?>> {
+import lu.pcy113.jbcodec.CodecManager;
 
-	public ArrayListEncoder() {
+public class SingleArrayListEncoder extends DefaultObjectEncoder<ArrayList<?>> {
+
+	public SingleArrayListEncoder() {
 		super(ArrayList.class);
 	}
 
@@ -16,19 +16,20 @@ public class ArrayListEncoder extends DefaultObjectEncoder<ArrayList<?>> {
 	 */
 	@Override
 	public ByteBuffer encode(boolean head, ArrayList<?> obj) {
-		List<ByteBuffer> elements = new ArrayList<>();
-		for (Object o : obj) {
-			elements.add(cm.encode(true, o));
-		}
-
 		ByteBuffer bb = ByteBuffer.allocate(estimateSize(head, obj));
 
 		super.putHeader(head, bb);
 
 		bb.putInt(obj.size());
 
-		for (ByteBuffer bbb : elements) {
-			bb.put(bbb);
+		if (obj.size() != 0) {
+			Encoder<?> encoder = cm.getEncoderByObject(obj.get(0));
+
+			bb.putShort(encoder.header());
+
+			for (Object o : obj) {
+				bb.put(cm.encode(false, o));
+			}
 		}
 
 		bb.flip();
@@ -37,7 +38,7 @@ public class ArrayListEncoder extends DefaultObjectEncoder<ArrayList<?>> {
 
 	@Override
 	public int estimateSize(boolean head, ArrayList<?> obj) {
-		return super.estimateHeaderSize(head) + 4 + IntStream.range(0, obj.size()).map(c -> cm.estimateSize(true, obj.get(c))).sum();
+		return super.estimateHeaderSize(head) + 4 + (obj.size() > 0 ? CodecManager.HEAD_SIZE : 0) + obj.stream().mapToInt(c -> cm.estimateSize(false, c)).sum();
 	}
 
 	@Override

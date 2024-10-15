@@ -3,9 +3,9 @@ package lu.pcy113.jbcodec.decoder;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 
-public class ArrayListDecoder extends DefaultObjectDecoder<ArrayList<?>> {
+public class MultiArrayListDecoder extends DefaultObjectDecoder<ArrayList<?>> {
 
-	public ArrayListDecoder() {
+	public MultiArrayListDecoder() {
 		super(ArrayList.class);
 	}
 	

@@ -17,7 +17,7 @@ public class SingleHashMapDecoder extends DefaultObjectDecoder<HashMap<Object, O
 
 		final HashMap<Object, Object> map = new HashMap<>();
 
-		if (length != 0) {
+		if (length > 0) {
 			final short keyHeader = bb.getShort();
 			final short valueHeader = bb.getShort();
 
@@ -27,6 +27,7 @@ public class SingleHashMapDecoder extends DefaultObjectDecoder<HashMap<Object, O
 			for (int i = 0; i < length; i++) {
 				Object k = keyDecoder.decode(false, bb);
 				Object v = valueDecoder.decode(false, bb);
+				
 				map.put(k, v);
 			}
 		}
