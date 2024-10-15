@@ -28,6 +28,10 @@ public class HashMapDEncoderMain {
 
 		final ByteBuffer bb = cm.encode(originalMap);
 
+		assert bb.remaining() == cm.estimateSize(originalMap) : "Unexpected size: " + bb.remaining() + " vs estimated: " + cm.estimateSize(originalMap);
+		assert bb.capacity() == bb.remaining() : "Unexpected capacity: " + bb.capacity() + " vs remaining: " + bb.remaining() + " (buffer not filled)";
+
+		
 		@SuppressWarnings("unchecked")
 		HashMap<String, String> backMap = (HashMap<String, String>) cm.decode(bb);
 
@@ -61,6 +65,9 @@ public class HashMapDEncoderMain {
 
 		final ByteBuffer bb = cm.encode(originalMap);
 
+		assert bb.remaining() == cm.estimateSize(originalMap) : "Unexpected size: " + bb.remaining() + " vs estimated: " + cm.estimateSize(originalMap);
+		assert bb.capacity() == bb.remaining() : "Unexpected capacity: " + bb.capacity() + " vs remaining: " + bb.remaining() + " (buffer not filled)";
+		
 		@SuppressWarnings("unchecked")
 		HashMap<String, String> backMap = (HashMap<String, String>) cm.decode(bb);
 

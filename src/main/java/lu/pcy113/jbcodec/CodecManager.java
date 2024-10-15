@@ -15,8 +15,8 @@ import lu.pcy113.jbcodec.decoder.FloatDecoder;
 import lu.pcy113.jbcodec.decoder.IntegerDecoder;
 import lu.pcy113.jbcodec.decoder.LongDecoder;
 import lu.pcy113.jbcodec.decoder.NullDecoder;
+import lu.pcy113.jbcodec.decoder.PlatformStringDecoder;
 import lu.pcy113.jbcodec.decoder.ShortDecoder;
-import lu.pcy113.jbcodec.decoder.StringDecoder;
 import lu.pcy113.jbcodec.decoder.VoidDecoder;
 import lu.pcy113.jbcodec.encoder.BooleanEncoder;
 import lu.pcy113.jbcodec.encoder.ByteEncoder;
@@ -28,8 +28,8 @@ import lu.pcy113.jbcodec.encoder.FloatEncoder;
 import lu.pcy113.jbcodec.encoder.IntegerEncoder;
 import lu.pcy113.jbcodec.encoder.LongEncoder;
 import lu.pcy113.jbcodec.encoder.NullEncoder;
+import lu.pcy113.jbcodec.encoder.PlatformStringEncoder;
 import lu.pcy113.jbcodec.encoder.ShortEncoder;
-import lu.pcy113.jbcodec.encoder.StringEncoder;
 import lu.pcy113.jbcodec.encoder.VoidEncoder;
 import lu.pcy113.pclib.datastructure.pair.Pair;
 
@@ -65,6 +65,10 @@ public class CodecManager {
 		Encoder<T> encoder = ((Encoder<T>) getEncoderByObject(obj));
 
 		return encoder.estimateSize(head, obj);
+	}
+	
+	public <T> int estimateSize(T obj) {
+		return this.estimateSize(true, obj);
 	}
 
 	public Decoder getDecoder(short header) {
@@ -185,7 +189,7 @@ public class CodecManager {
 		cm.register(new FloatEncoder(), new FloatDecoder(), (short) 5);
 		cm.register(new LongEncoder(), new LongDecoder(), (short) 6);
 		cm.register(new CharacterEncoder(), new CharacterDecoder(), (short) 7);
-		cm.register(new StringEncoder(), new StringDecoder(), (short) 8);
+		cm.register(new PlatformStringEncoder(), new PlatformStringDecoder(), (short) 8);
 		cm.register(new VoidEncoder(), new VoidDecoder(), (short) 9);
 		cm.register(new BooleanEncoder(), new BooleanDecoder(), (short) 10);
 
