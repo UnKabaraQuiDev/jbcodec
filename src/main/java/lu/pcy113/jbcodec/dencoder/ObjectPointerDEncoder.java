@@ -16,7 +16,7 @@ public class ObjectPointerDEncoder extends DefaultObjectDEncoder<ObjectPointer> 
 
 		super.putHeader(head, bb);
 
-		bb.put(cm.encode(true, obj.getValue()));
+		bb.put(cm.encode(true, obj.get()));
 
 		bb.flip();
 
@@ -32,7 +32,7 @@ public class ObjectPointerDEncoder extends DefaultObjectDEncoder<ObjectPointer> 
 
 	@Override
 	public int estimateSize(boolean head, ObjectPointer obj) {
-		return super.estimateHeaderSize(head) + cm.estimateSize(true, obj.getValue());
+		return super.estimateHeaderSize(head) + cm.estimateSize(true, obj.get());
 	}
 
 }

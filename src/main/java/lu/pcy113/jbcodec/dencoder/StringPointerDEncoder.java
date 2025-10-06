@@ -12,7 +12,7 @@ public class StringPointerDEncoder extends DefaultObjectDEncoder<StringPointer> 
 
 		super.putHeader(head, bb);
 		
-		bb.put(cm.encode(true, obj.getValue()));
+		bb.put(cm.encode(true, obj.get()));
 
 		bb.flip();
 
@@ -28,7 +28,7 @@ public class StringPointerDEncoder extends DefaultObjectDEncoder<StringPointer> 
 
 	@Override
 	public int estimateSize(boolean head, StringPointer obj) {
-		return super.estimateHeaderSize(head) + cm.estimateSize(true, obj.getValue());
+		return super.estimateHeaderSize(head) + cm.estimateSize(true, obj.get());
 	}
 
 }
