@@ -1,6 +1,8 @@
 # JBCodec
 A lightweight Java Byte Codec.
 
+## Moved to https://github.com/UnKabaraQuiDev/PCLib
+
 ------
 
 ## Content
